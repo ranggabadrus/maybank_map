@@ -61,6 +61,10 @@ const App = () => {
     setIsResultShown(false);
   };
 
+  if (!process.env.REACT_APP_GOOGLE_API) {
+    return <div>Please provide Google Api to make Google Map works</div>;
+  }
+
   return (
     <div>
       <div
