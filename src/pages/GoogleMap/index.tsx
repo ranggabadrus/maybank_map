@@ -8,7 +8,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { storeResult } from "../../redux/googleMapReducer";
 import { RootState } from "../../redux/store";
-import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { Box } from "@mui/system";
 import Card from "@mui/material/Card";
@@ -21,7 +20,6 @@ import "../../style.css";
 import ClearIcon from "@mui/icons-material/Clear";
 
 const App = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const mapRef = useRef<any>(null);
@@ -53,7 +51,7 @@ const App = () => {
       lat: place.geometry.location.lat(),
       lng: place.geometry.location.lng(),
     });
-    setZoom(15);
+    setZoom(12);
   };
 
   const findButton = () => {
@@ -61,55 +59,43 @@ const App = () => {
     setIsResultShown(false);
   };
 
+  const clearText = () => {
+    setZoom(10);
+    setSearchText("");
+  };
+
   if (!process.env.REACT_APP_GOOGLE_API) {
-    return <div>Please provide Google Api to make Google Map works</div>;
+    return <Box>Please provide Google Api to make Google Map works</Box>;
   }
 
   return (
-    <div>
-      <div
+    <Box>
+      <Box
         className="result-button"
         onClick={() => setIsResultShown(!isResultShown)}
       >
         {isResultShown ? "Hide" : "Show"} History Result
-      </div>
-      <div className="go-back-button" onClick={() => navigate("/")}>
-        Go Back
-      </div>
+      </Box>
       {searchText && (
-        <div
-          className="clear-icon"
-          onClick={() => {
-            setZoom(10);
-            setSearchText("");
-          }}
-        >
+        <Box className="clear-icon" onClick={clearText}>
           <ClearIcon color="disabled" />
-        </div>
+        </Box>
       )}
-      <div className={`result ${isResultShown ? "show" : "hide"}`}>
-        <div className="result-header">
-          <div className="result-title">Result</div>
-          <div className="close-icon" onClick={() => setIsResultShown(false)}>
+      <Box className={`result ${isResultShown ? "show" : "hide"}`}>
+        <Box className="result-header">
+          <Box className="result-title">Result</Box>
+          <Box className="close-icon" onClick={() => setIsResultShown(false)}>
             <ClearIcon color="disabled" />
-          </div>
-        </div>
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: 360,
-            bgcolor: "background.paper",
-            height: 300,
-            overflow: "scroll",
-          }}
-        >
+          </Box>
+        </Box>
+        <Box className="result-container">
           {result.length > 0 ? (
             result.map((e, i) => (
               <Card sx={{ maxWidth: 345 }} key={i}>
                 <CardMedia
                   sx={{ height: 100 }}
                   image={e.photo}
-                  title="green iguana"
+                  title={e.name}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="subtitle2" component="div">
@@ -143,15 +129,15 @@ const App = () => {
               </Card>
             ))
           ) : (
-            <div className="no-result-container">
-              <div className="no-result">Oops, no result found.</div>
-              <div className="find-button" onClick={findButton}>
+            <Box className="no-result-container">
+              <Box className="no-result">Oops, no result found.</Box>
+              <Box className="find-button" onClick={findButton}>
                 Let's go find one!
-              </div>
-            </div>
+              </Box>
+            </Box>
           )}
         </Box>
-      </div>
+      </Box>
       <LoadScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_API}
         libraries={libraries}
@@ -177,7 +163,7 @@ const App = () => {
           <Marker position={coor} />
         </GoogleMap>
       </LoadScript>
-    </div>
+    </Box>
   );
 };
 

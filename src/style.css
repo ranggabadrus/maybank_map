@@ -15,21 +15,12 @@
   cursor: pointer;
 }
 
-.go-back-button {
-  position: absolute;
-  z-index: 999;
-  left: 0;
-  right: 0;
-  margin: auto;
-  width: 240px;
-  text-align: center;
-  bottom: 10px;
-  padding: 5px 0;
-  border: 1px solid #eaeaea;
-  background: #f2f2f2;
-  color: gray;
-  border-radius: 5px;
-  cursor: pointer;
+.result-container {
+  width: "100%";
+  max-width: 360px;
+  background-color: #f2f2f2;
+  height: 310px;
+  overflow-y: scroll;
 }
 
 .result {

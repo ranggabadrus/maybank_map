@@ -18,9 +18,10 @@ const initialState: ReducerType = {
   result: [],
 };
 
-// First, create the thunk
-export const fetchCiki = createAsyncThunk<GoogleMapType[]>(
-  "fetchCiki",
+// for thunk
+// currently is not used yet
+export const forThunk = createAsyncThunk<GoogleMapType[]>(
+  "fetchData",
   async (payload: any) => {
     const data: GoogleMapType[] = payload;
     return data;
@@ -37,7 +38,7 @@ export const googleMapSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(fetchCiki.fulfilled, (state, action) => {
+    builder.addCase(forThunk.fulfilled, (state, action) => {
       // Add user to the state array
       state.result = action.payload;
     });
